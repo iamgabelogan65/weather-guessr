@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import axios from 'axios'
+import { getPosition } from './utils/utils'
 
 function App() {
 
@@ -29,6 +30,8 @@ function App() {
   }
 
 
+  const [pos, setPosition] = useState(getPosition())
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -42,12 +45,20 @@ function App() {
       <div>
         <p>Guess Temperature: {guessTemp}°F</p>
       </div>
+
       {actualTemp !== null && (
         <div>
           <p>Actual Temperature: {actualTemp}°F</p>
         </div>
       )}
 
+      <div>
+        <button onClick={() => setPosition(getPosition())}>
+          get location
+        </button>
+
+        {pos.latitude} , {pos.longitude} 
+      </div>
     </>
   )
 }
