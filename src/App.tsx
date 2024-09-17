@@ -1,33 +1,53 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import axios from 'axios'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [guessTemp, setguessTemp] = useState("")
+  const [actualTemp, setActualTemp] = useState("")
+
+  const apiKey = import.meta.env.VITE_WEATHER_API
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const temp = await getGeocoding()
+    setActualTemp(temp)
+  }
+
+  const getGeocoding = async () => {
+    const lat = 37.368832
+    const lon = -122.036346
+    const unit = 'imperial'
+    
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`
+    const res = await axios.get(url)
+    
+    const temp = res.data.main.temp
+    return temp
+  }
+
 
   return (
     <>
+      <form onSubmit={handleSubmit}>
+        <input
+          value={guessTemp}
+          onChange={(e) => setguessTemp(e.target.value)}
+        />
+        <button>Submit</button>
+      </form>
+
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <p>Guess Temperature: {guessTemp}°F</p>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {actualTemp !== null && (
+        <div>
+          <p>Actual Temperature: {actualTemp}°F</p>
+        </div>
+      )}
+
     </>
   )
 }
