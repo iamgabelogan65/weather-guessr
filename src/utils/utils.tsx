@@ -14,3 +14,11 @@ export function getPosition() {
         lng : parseFloat(long),
     };
 }
+
+// score calculations: computes the percent accuracy in decimal form
+export function calculateScore(guess: number, actual: number): number {
+    let abs_guess = Math.abs(guess)
+    let abs_actual = Math.abs(actual)
+
+    return 1 - (Math.abs((abs_actual - abs_guess)/abs_actual));
+}
