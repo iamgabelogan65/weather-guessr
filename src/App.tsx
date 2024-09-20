@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios'
-import { calculateScore, getPosition, getPositionFromCountryList } from './utils/utils'
+import { calculateScore, getPositionFromCountryList } from './utils/utils'
 import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
 import { Position } from './utils/utils';
 
@@ -68,6 +68,22 @@ function App() {
 
   return (
     <>
+      {pos !== null && (
+        <div className="map">
+          <APIProvider apiKey={mapKey} onLoad={() => console.log('Maps API has loaded.')}>
+            <Map 
+              defaultCenter={pos}
+              center={pos}
+              defaultZoom={7}
+              gestureHandling={'greedy'}
+              disableDefaultUI={true}
+            >
+              <Marker position={pos} />
+            </Map>
+          </APIProvider>
+        </div>
+      )}
+
       {score != null && (
         <div>
           {score}
@@ -101,18 +117,6 @@ function App() {
           </button>
 
           {pos.lat} , {pos.lng} 
-          <APIProvider apiKey={mapKey} onLoad={() => console.log('Maps API has loaded.')}>
-            <Map 
-              style={{width: '500px', height: '500px'}}
-              defaultCenter={pos}
-              center={pos}
-              defaultZoom={3}
-              gestureHandling={'greedy'}
-              disableDefaultUI={true}
-            >
-              <Marker position={pos} />
-            </Map>
-          </APIProvider>
       </div>
       )}
 
