@@ -63,13 +63,13 @@ function App() {
       <APIProvider apiKey={mapKey} onLoad={() => console.log('Maps API has loaded.')}>
         <Map 
             style={{width: '500px', height: '500px'}}
-            defaultCenter={{lat: pos.latitude, lng: pos.longitude}}
-            center={{lat: pos.latitude, lng: pos.longitude}}
+            defaultCenter={pos}
+            center={pos}
             defaultZoom={3}
             gestureHandling={'greedy'}
             disableDefaultUI={true}
         >
-          <Marker position={{lat: pos.latitude, lng: pos.longitude}} />
+          <Marker position={pos} />
         </Map>
       </APIProvider>
     </>
