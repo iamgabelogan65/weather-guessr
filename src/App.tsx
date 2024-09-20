@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import axios from 'axios'
 import { getPosition } from './utils/utils'
+import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
 
 function App() {
 
@@ -9,6 +10,7 @@ function App() {
   const [actualTemp, setActualTemp] = useState("")
 
   const apiKey = import.meta.env.VITE_WEATHER_API
+  const mapKey = import.meta.env.VITE_MAP_API
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -28,6 +30,7 @@ function App() {
     const temp = res.data.main.temp
     return temp
   }
+
 
 
   const [pos, setPosition] = useState(getPosition())
@@ -59,6 +62,19 @@ function App() {
 
         {pos.latitude} , {pos.longitude} 
       </div>
+
+      <APIProvider apiKey={mapKey} onLoad={() => console.log('Maps API has loaded.')}>
+        <Map 
+            style={{width: '500px', height: '500px'}}
+            defaultCenter={{lat: pos.latitude, lng: pos.longitude}}
+            center={{lat: pos.latitude, lng: pos.longitude}}
+            defaultZoom={3}
+            gestureHandling={'greedy'}
+            disableDefaultUI={true}
+        >
+          <Marker position={{lat: pos.latitude, lng: pos.longitude}} />
+        </Map>
+      </APIProvider>
     </>
   )
 }
