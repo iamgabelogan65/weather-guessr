@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios'
-import { getPositionFromCountryList } from './utils/utils'
+import { calculateScore, getPosition, getPositionFromCountryList } from './utils/utils'
 import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
 import { Position } from './utils/utils';
 
@@ -9,6 +9,7 @@ function App() {
 
   const [guessTemp, setguessTemp] = useState("")
   const [actualTemp, setActualTemp] = useState("")
+  const [score, setScore] = useState(0)
   const [pos, setPosition] = useState<Position | null>(null);
 
   const apiKey = import.meta.env.VITE_WEATHER_API
@@ -19,6 +20,9 @@ function App() {
 
     const temp = await getGeocoding()
     setActualTemp(temp)
+
+    // can add to cumulative score
+    setScore(calculateScore(parseFloat(guessTemp), parseFloat(temp)))
   }
 
   const getGeocoding = async () => {
@@ -64,12 +68,20 @@ function App() {
 
   return (
     <>
+      {score != null && (
+        <div>
+          {score}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
         <input
           value={guessTemp}
           onChange={(e) => setguessTemp(e.target.value)}
+          type='number'
+          required
         />
-        <button>Submit</button>
+        <button type='submit'>Submit</button>
       </form>
 
       <div>
