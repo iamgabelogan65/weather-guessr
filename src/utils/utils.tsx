@@ -10,7 +10,7 @@ export function getPosition() {
 
 
     return {
-        latitude : parseFloat(lat),
-        longitude : parseFloat(long),
+        lat : parseFloat(lat),
+        lng : parseFloat(long),
     };
 }

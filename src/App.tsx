@@ -8,6 +8,7 @@ function App() {
 
   const [guessTemp, setguessTemp] = useState("")
   const [actualTemp, setActualTemp] = useState("")
+  const [pos, setPosition] = useState(getPosition())
 
   const apiKey = import.meta.env.VITE_WEATHER_API
   const mapKey = import.meta.env.VITE_MAP_API
@@ -20,8 +21,8 @@ function App() {
   }
 
   const getGeocoding = async () => {
-    const lat = 37.368832
-    const lon = -122.036346
+    const lat = pos.lat
+    const lon = pos.lng
     const unit = 'imperial'
     
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`
@@ -31,9 +32,6 @@ function App() {
     return temp
   }
 
-
-
-  const [pos, setPosition] = useState(getPosition())
 
   return (
     <>
@@ -60,9 +58,8 @@ function App() {
           get location
         </button>
 
-        {pos.latitude} , {pos.longitude} 
+        {pos.lat} , {pos.lng} 
       </div>
-
       <APIProvider apiKey={mapKey} onLoad={() => console.log('Maps API has loaded.')}>
         <Map 
             style={{width: '500px', height: '500px'}}
