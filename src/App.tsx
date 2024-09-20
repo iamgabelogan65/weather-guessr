@@ -2,11 +2,13 @@ import { useState } from 'react'
 import './App.css'
 import axios from 'axios'
 import { getPosition } from './utils/utils'
+import MyMap from './components/MyMap'
 
 function App() {
 
   const [guessTemp, setguessTemp] = useState("")
   const [actualTemp, setActualTemp] = useState("")
+  const [pos, setPosition] = useState(getPosition())
 
   const apiKey = import.meta.env.VITE_WEATHER_API
 
@@ -18,8 +20,8 @@ function App() {
   }
 
   const getGeocoding = async () => {
-    const lat = 37.368832
-    const lon = -122.036346
+    const lat = pos.lat
+    const lon = pos.lng
     const unit = 'imperial'
     
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}&appid=${apiKey}`
@@ -29,8 +31,6 @@ function App() {
     return temp
   }
 
-
-  const [pos, setPosition] = useState(getPosition())
 
   return (
     <>
@@ -57,8 +57,9 @@ function App() {
           get location
         </button>
 
-        {pos.latitude} , {pos.longitude} 
+        {pos.lat} , {pos.lng} 
       </div>
+      <MyMap position={pos}/>
     </>
   )
 }
