@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import './App.css'
 import axios from 'axios'
 import { calculateScore, getPositionFromCountryList } from './utils/utils'
 import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
 import { Position } from './utils/utils';
+import { RefreshButton } from './components/RefreshButton';
+import NextButton from './components/NextButton';
 
 function App() {
 
@@ -74,7 +75,7 @@ function App() {
               <Map
                 defaultCenter={pos}
                 center={pos}
-                defaultZoom={3}
+                defaultZoom={7}
                 gestureHandling={'none'}
                 disableDefaultUI={true}
               >
@@ -99,24 +100,27 @@ function App() {
       </div>
 
       <div className='form-container'>
-        <button onClick={handleGetLocation}>
+        {/* <button onClick={handleGetLocation}>
           Refresh
-        </button>
+        </button> */}
+        <RefreshButton onClick={handleGetLocation} />
 
         <form onSubmit={handleSubmit}>
-          <input
-            value={guessTemp}
-            onChange={(e) => setguessTemp(e.target.value)}
-            type='number'
-            required
-          />
-          <button type='submit'>Submit</button>
+          <div className='input-container'>
+            <label>Guess</label>
+            <input
+              className='input-field'
+              value={guessTemp}
+              onChange={(e) => setguessTemp(e.target.value)}
+              type='number'
+              placeholder='23.66'
+              required
+            />
+          </div>
         </form>
 
 
-        <button onClick={handleGetLocation}>
-          Get Location
-        </button>
+        <NextButton onClick={handleGetLocation} />
       </div>
     </div>
   )

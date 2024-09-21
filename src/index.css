@@ -13,23 +13,14 @@
 
 .app-container {
   display: flex;
-  /* place-items: center; */
-  min-width: 320px;
-  min-height: 100vh;
   flex-direction: column;
   gap: 2em;
 }
 
 .map-container {
-  width: 100%;
+  width: 100vw;
   height: 400px;
 }
-
-.map-container {
-  width: 100%;
-  height: 400px;
-}
-
 
 .score-container {
   display: flex;
@@ -41,6 +32,51 @@
   justify-content: space-around;
 }
 
+.button-container {
+  border: none;
+  background: red;
+  padding: 0 36px;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+button:hover {
+  background: gray;
+}
+
+svg {
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* svg:hover {
+  fill: white;
+  background: darkgray;
+} */
+
+.input-container {
+  background: wheat;
+  padding: 8px 24px;
+  border-radius: 8px;
+  width: 400px;
+  box-sizing: border-box;
+  /* margin-bottom: 12px; */
+  transition: all 120ms ease-in-out;
+}
+
+.input-field {
+  font-size: 16px;
+  outline: none;
+  border: none;
+  background-color: inherit;
+  color: #000;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 4px 0;
+}
 
 
 @media (max-height: 585px) {
