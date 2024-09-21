@@ -11,7 +11,12 @@ function App() {
   const [guessTemp, setguessTemp] = useState("")
   const [actualTemp, setActualTemp] = useState("")
   const [score, setScore] = useState(0)
-  const [pos, setPosition] = useState<Position | null>(null);
+  const [pos, setPosition] = useState<Position | null>(null)
+  const [formDisabled, setFormDisabled] = useState(false)
+
+  const threshold = 0.90
+  const [totalScore, setTotalScore] = useState(0)
+
 
   const apiKey = import.meta.env.VITE_WEATHER_API
   const mapKey = import.meta.env.VITE_MAP_API
@@ -23,7 +28,16 @@ function App() {
     setActualTemp(temp)
 
     // can add to cumulative score
-    setScore(calculateScore(parseFloat(guessTemp), parseFloat(temp)))
+
+    if (temp !== null) {
+      const scoreAccuracy = calculateScore(parseFloat(guessTemp), parseFloat(temp))
+      if (scoreAccuracy >= threshold) {
+        setScore(prevScore => prevScore + 1)
+      }
+      setTotalScore(prevScore => prevScore + 1)
+    }
+
+    setFormDisabled(true)
   }
 
   const getGeocoding = async () => {
@@ -50,6 +64,18 @@ function App() {
       setPosition(res)
       console.log(res, 'onClick')
     }
+    setFormDisabled(false)
+  };
+
+  const handleRefresh = async () => {
+    const res = await getPositionFromCountryList();
+    if (res) {
+      setPosition(res)
+      setScore(0)
+      setTotalScore(0)
+      console.log(res, 'onClick')
+    }
+    setFormDisabled(false)
   };
 
   useEffect(() => {
@@ -94,16 +120,13 @@ function App() {
 
         {score != null && (
           <div>
-            <p>Score: {score}</p>
+            <p>Score: {score} / {totalScore}</p>
           </div>
         )}
       </div>
 
       <div className='form-container'>
-        {/* <button onClick={handleGetLocation}>
-          Refresh
-        </button> */}
-        <RefreshButton onClick={handleGetLocation} />
+        <RefreshButton onClick={handleRefresh} />
 
         <form onSubmit={handleSubmit}>
           <div className='input-container'>
