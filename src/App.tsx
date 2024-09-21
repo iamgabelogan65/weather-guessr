@@ -67,61 +67,58 @@ function App() {
   }, [])
 
   return (
-    <>
+    <div className='app-container'>
       {pos !== null && (
-        <div className="map">
+        <div className='map-container'>
           <APIProvider apiKey={mapKey} onLoad={() => console.log('Maps API has loaded.')}>
-            <Map 
-              defaultCenter={pos}
-              center={pos}
-              defaultZoom={7}
-              gestureHandling={'greedy'}
-              disableDefaultUI={true}
-            >
-              <Marker position={pos} />
-            </Map>
+              <Map
+                defaultCenter={pos}
+                center={pos}
+                defaultZoom={3}
+                gestureHandling={'none'}
+                disableDefaultUI={true}
+              >
+                <Marker position={pos} />
+              </Map>
           </APIProvider>
-        </div>
-      )}
-
-      {score != null && (
-        <div>
-          {score}
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit}>
-        <input
-          value={guessTemp}
-          onChange={(e) => setguessTemp(e.target.value)}
-          type='number'
-          required
-        />
-        <button type='submit'>Submit</button>
-      </form>
-
-      <div>
-        <p>Guess Temperature: {guessTemp}°F</p>
-      </div>
-
-      {actualTemp !== null && (
-        <div>
-          <p>Actual Temperature: {actualTemp}°F</p>
-        </div>
-      )}
-
-      {pos !== null && (
-        <div>
-          <button onClick={handleGetLocation}>
-            Get Location
-          </button>
-
-          {pos.lat} , {pos.lng} 
       </div>
       )}
 
+      <div className='score-container'>
+        {actualTemp !== null && (
+          <div>
+            <p>Actual Temperature: {actualTemp}°F</p>
+          </div>
+        )}
 
-    </>
+        {score != null && (
+          <div>
+            <p>Score: {score}</p>
+          </div>
+        )}
+      </div>
+
+      <div className='form-container'>
+        <button onClick={handleGetLocation}>
+          Refresh
+        </button>
+
+        <form onSubmit={handleSubmit}>
+          <input
+            value={guessTemp}
+            onChange={(e) => setguessTemp(e.target.value)}
+            type='number'
+            required
+          />
+          <button type='submit'>Submit</button>
+        </form>
+
+
+        <button onClick={handleGetLocation}>
+          Get Location
+        </button>
+      </div>
+    </div>
   )
 }
 
