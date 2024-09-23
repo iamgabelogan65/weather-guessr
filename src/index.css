@@ -3,6 +3,10 @@
 
 :root {
   font-family: 'Open Sans', sans-serif;
+  --dark-gray: #252525;
+  --green-gray: #3C3D37;
+  --light-green-gray: #697565;
+  --pale: #ECDFCC;
 }
 
 * {
@@ -15,6 +19,9 @@
   display: flex;
   flex-direction: column;
   gap: 2em;
+  width: 100%;
+  height: 100vh;
+  background: var(--dark-gray);
 }
 
 .map-container {
@@ -28,6 +35,7 @@
   font-size: 1.2rem;
   text-align: left;
   font-weight: 600;
+  color: var(--pale);
 }
 
 .form-container {
@@ -38,14 +46,18 @@
 
 .button-container {
   border: none;
-  background: red;
+  background: var(--green-gray);
   padding: 0 36px;
   box-sizing: border-box;
   border-radius: 10px;
+  fill: var(--pale);
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 button:hover {
-  background: gray;
+  background: var(--light-green-gray);
 }
 
 svg {
@@ -53,21 +65,28 @@ svg {
   height: 50px;
   padding: 10px;
   border-radius: 10px;
+  transition: transform 0.5s ease;
 }
 
-/* svg:hover {
-  fill: white;
-  background: darkgray;
-} */
+.refresh-svg:hover {
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+}
 
 .input-container {
-  background: wheat;
+  background: var(--green-gray);
   padding: 8px 24px;
   border-radius: 8px;
-  width: 400px;
+  width: 20em;
   box-sizing: border-box;
   /* margin-bottom: 12px; */
-  transition: all 120ms ease-in-out;
+  transition: all 0.2s ease-in-out;
+  font-size: 1.0rem;
+  font-weight: 600;
+  color: var(--pale);
+  &:focus-within {
+    background: var(--light-green-gray);
+  }
 }
 
 .input-field {
@@ -75,7 +94,7 @@ svg {
   outline: none;
   border: none;
   background-color: inherit;
-  color: #000;
+  color:var(--pale);
   width: 100%;
   box-sizing: border-box;
   padding: 0;
