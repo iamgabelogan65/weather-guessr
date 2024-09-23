@@ -13,6 +13,7 @@
 
 .app-container {
   display: flex;
+  height: 100vh;
   flex-direction: column;
   gap: 2em;
 }
@@ -22,17 +23,27 @@
   height: 75vh;
 }
 
+.score-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 20%;
+  margin-bottom: 1em;
+}
+
 .score-container {
   display: flex;
   justify-content: space-around;
   font-size: 1.2rem;
   text-align: left;
   font-weight: 600;
+  margin-bottom: 1em;
 }
 
 .form-container {
   display: flex;
   justify-content: space-around;
+  gap: 1em;
 }
 
 
@@ -55,19 +66,22 @@ svg {
   border-radius: 10px;
 }
 
-/* svg:hover {
-  fill: white;
-  background: darkgray;
-} */
+form {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .input-container {
   background: wheat;
   padding: 8px 24px;
   border-radius: 8px;
-  width: 400px;
+  width: 80%;
   box-sizing: border-box;
   /* margin-bottom: 12px; */
   transition: all 120ms ease-in-out;
+  justify-content: center;
 }
 
 .input-field {
@@ -91,5 +105,29 @@ svg {
 @media (max-height: 700px) {
   .score-container {
     font-size: 1rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .form-container {
+    align-items: center;
+    flex-direction: column;
+    
+  }
+  .button-container {
+    width: 80%;
+  }
+  form {
+    width: 100%;
+  }
+  .map-container {
+    height: 700px;
+  }
+  .score-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .score-form-container {
+    height: 60%;
   }
 }
