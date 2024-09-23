@@ -78,6 +78,14 @@ function App() {
     setFormDisabled(false)
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (formDisabled) {
+      if (e.key === 'Enter') {
+        e.preventDefault(); // Prevents the form from submitting on Enter key press
+      }
+    }
+  }
+
   useEffect(() => {
     const fetchInitialPosition = async () => {
       try {
@@ -111,39 +119,42 @@ function App() {
       </div>
       )}
 
-      <div className='score-container'>
-        {actualTemp !== null && (
-          <div>
-            <p>Actual Temperature: {actualTemp}°F</p>
-          </div>
-        )}
+      <div className='score-form-container'>
+        <div className='score-container'>
+          {actualTemp !== null && (
+            <div>
+              <p>Actual Temperature: {actualTemp}°F</p>
+            </div>
+          )}
 
-        {score != null && (
-          <div>
-            <p>Score: {score} / {totalScore}</p>
-          </div>
-        )}
-      </div>
+          {score != null && (
+            <div>
+              <p>Score: {score} / {totalScore}</p>
+            </div>
+          )}
+        </div>
 
-      <div className='form-container'>
-        <RefreshButton onClick={handleRefresh} />
+        <div className='form-container'>
+          <RefreshButton onClick={handleRefresh} />
 
-        <form onSubmit={handleSubmit}>
-          <div className='input-container'>
-            <label>Guess</label>
-            <input
-              className='input-field'
-              value={guessTemp}
-              onChange={(e) => setguessTemp(e.target.value)}
-              type='number'
-              placeholder='23.66'
-              required
-            />
-          </div>
-        </form>
+          <form onSubmit={handleSubmit}>
+            <div className='input-container'>
+              <label>Guess</label>
+              <input
+                className='input-field'
+                value={guessTemp}
+                onChange={(e) => setguessTemp(e.target.value)}
+                type='number'
+                placeholder='23.66'
+                required
+                onKeyDown={handleKeyDown}
+              />
+            </div>
+          </form>
 
 
-        <NextButton onClick={handleGetLocation} />
+          <NextButton onClick={handleGetLocation} />
+        </div>
       </div>
     </div>
   )
